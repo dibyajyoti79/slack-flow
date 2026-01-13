@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { serverConfig } from "../config";
 
-type TokenPayload = {
+export type TokenPayload = {
   id: string;
   email: string;
 };
