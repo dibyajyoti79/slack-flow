@@ -1,4 +1,4 @@
-import { Document, model, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 import bcrypt from "bcrypt";
 
 export interface UserAttrs {
@@ -9,11 +9,7 @@ export interface UserAttrs {
   avatar?: string;
 }
 
-export interface UserDoc extends UserAttrs, Document {
-  id: string;
-}
-
-const userSchema = new Schema<UserDoc>(
+const userSchema = new Schema<UserAttrs>(
   {
     name: {
       type: String,
@@ -69,6 +65,6 @@ userSchema.pre("save", function (next) {
   next();
 });
 
-const User = model<UserDoc>("User", userSchema);
+const User = model<UserAttrs>("User", userSchema);
 
 export default User;
