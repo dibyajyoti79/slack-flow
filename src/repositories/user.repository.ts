@@ -1,8 +1,8 @@
 import crudRepository from "./crud.repository";
-import User, { UserAttrs, UserDoc } from "../models/user.model";
+import User, { UserAttrs } from "../models/user.model";
 
 const userRepository = {
-  ...crudRepository<UserDoc, UserAttrs>(User),
+  ...crudRepository<UserAttrs>(User),
   async getByEmail(email: string) {
     const user = await User.findOne({ email });
     return user;

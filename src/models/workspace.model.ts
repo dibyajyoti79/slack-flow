@@ -1,11 +1,12 @@
 import { model, Schema, Types } from "mongoose";
 
+export type MemberRole = "admin" | "member";
 export interface WorkspaceAttrs {
   name: string;
   description?: string;
   members: {
     memberId: Types.ObjectId;
-    role: "admin" | "member";
+    role: MemberRole;
   }[];
   joinCode: string;
   channels: Types.ObjectId[];
