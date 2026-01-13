@@ -13,6 +13,13 @@ const userController = {
       .status(StatusCodes.CREATED)
       .json(new ApiResponse("Signup successful", user));
   },
+
+  signin: async (req: Request, res: Response) => {
+    logger.info("Signin request received", req.body);
+    const user = await userService.signin(req.body);
+    logger.info("Signin successful", user);
+    res.status(StatusCodes.OK).json(new ApiResponse("Signin successful", user));
+  },
 };
 
 export default userController;

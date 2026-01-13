@@ -1,4 +1,5 @@
 import { z } from "zod";
-import { signupSchema } from "../validators/user.validator";
+import { signinSchema, signupSchema } from "../validators/user.validator";
 
 export type SignupDto = z.infer<typeof signupSchema>;
+export type SigninDto = z.infer<typeof signinSchema>;

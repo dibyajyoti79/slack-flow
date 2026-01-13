@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { validateRequestBody } from "../../validators";
-import { signupSchema } from "../../validators/user.validator";
+import { signinSchema, signupSchema } from "../../validators/user.validator";
 import userController from "../../controllers/user.controller";
 
 const userRouter = Router();
@@ -10,4 +10,11 @@ userRouter.post(
   validateRequestBody(signupSchema),
   userController.signup
 );
+
+userRouter.post(
+  "/signin",
+  validateRequestBody(signinSchema),
+  userController.signin
+);
+
 export default userRouter;
