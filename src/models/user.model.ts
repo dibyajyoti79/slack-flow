@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { HydratedDocument, model, Schema } from "mongoose";
 import bcrypt from "bcrypt";
 
 export interface UserAttrs {
@@ -8,6 +8,7 @@ export interface UserAttrs {
   username: string;
   avatar?: string;
 }
+export type UserDoc = HydratedDocument<UserAttrs>;
 
 const userSchema = new Schema<UserAttrs>(
   {

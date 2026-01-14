@@ -5,12 +5,25 @@ import Workspace, {
 } from "../models/workspace.model";
 import { BadRequestError, ForbiddenError } from "../utils/api-error";
 import crudRepository from "./crud.repository";
-import User from "../models/user.model";
-import Channel from "../models/channel.model";
+import User, { UserDoc } from "../models/user.model";
+import Channel, { ChannelDoc } from "../models/channel.model";
 import channelRepository from "./channel.repository";
 
 const workspaceRepository = {
   ...crudRepository<WorkspaceAttrs>(Workspace),
+  async getWorkspaceDetailsById(workspaceId: string) {
+    const workspace = await Workspace.findById(workspaceId)
+      .populate<{ channels: ChannelDoc[] }>("channels")
+      .populate<{
+        members: {
+          memberId: UserDoc;
+          role: MemberRole;
+        }[];
+      }>("members.memberId");
+
+    return workspace;
+  },
+
   async getWorkspaceByJoinCode(joinCode: string) {
     const workspace = await Workspace.findOne({ joinCode });
     return workspace;
@@ -20,7 +33,7 @@ const workspaceRepository = {
     return workspace;
   },
   async addMemberToWorkspace(
-    workspaceId: string,
+    workspaceId: Types.ObjectId,
     memberId: string,
     role: MemberRole
   ) {
@@ -51,7 +64,10 @@ const workspaceRepository = {
     return workspace;
   },
 
-  async addChannelToWorkspace(workspaceId: string, channelName: string) {
+  async addChannelToWorkspace(
+    workspaceId: Types.ObjectId,
+    channelName: string
+  ) {
     const workspace = await Workspace.findById(workspaceId);
     if (!workspace) {
       throw new BadRequestError("Workspace not found");

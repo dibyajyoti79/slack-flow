@@ -1,9 +1,9 @@
-import { model, Schema } from "mongoose";
+import { HydratedDocument, model, Schema } from "mongoose";
 
 export interface ChannelAttrs {
   name: string;
 }
-
+export type ChannelDoc = HydratedDocument<ChannelAttrs>;
 const channelSchema = new Schema<ChannelAttrs>(
   {
     name: {
