@@ -6,6 +6,8 @@ import channelRepository from "../repositories/channel.repository";
 import { MemberRole, WorkspaceAttrs } from "../models/workspace.model";
 import userRepository from "../repositories/user.repository";
 import { Types } from "mongoose";
+import { addEmailToMailQueue } from "../producers/mail.producer";
+import { workspaceJoinMail } from "../utils/mail";
 
 export const workspaceService = {
   async createWorkspace(data: CreateWorkspaceDto, ownerId: string) {
@@ -142,6 +144,10 @@ export const workspaceService = {
       memberId,
       role
     );
+    addEmailToMailQueue({
+      to: isValidUser.email,
+      ...workspaceJoinMail(workspace.name),
+    });
     return response;
   },
 

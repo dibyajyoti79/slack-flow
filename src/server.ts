@@ -6,12 +6,18 @@ import logger from "./config/logger.config";
 import { attachCorrelationIdMiddleware } from "./middlewares/correlation.middleware";
 import { NotFoundError } from "./utils/api-error";
 import connectDB from "./config/db.config";
+import "./workers/mail.worker";
+import { setupBullBoard } from "./utils/helpers/bull-board.helper";
 const app = express();
 
 app.use(express.json());
 
 app.use(attachCorrelationIdMiddleware);
 app.use("/api/v1", v1Router);
+
+// BULL BOARD
+const bullBoardAdapter = setupBullBoard();
+app.use("/admin/queues", bullBoardAdapter.getRouter());
 
 // NOTFOUND HANDLER
 app.use((req, res) => {

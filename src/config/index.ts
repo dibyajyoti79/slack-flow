@@ -7,6 +7,10 @@ type ServerConfig = {
   ENV: string;
   JWT_SECRET: jwt.Secret;
   JWT_EXPIRY: jwt.SignOptions["expiresIn"];
+  MAIL_ID: string;
+  MAIL_PASSWORD: string;
+  REDIS_HOST: string;
+  REDIS_PORT: number;
 };
 type DbConfig = {
   DEV_DB_URL: string;
@@ -25,6 +29,10 @@ export const serverConfig: ServerConfig = {
   ENV: process.env.NODE_ENV || "development",
   JWT_SECRET: process.env.JWT_SECRET || "secret",
   JWT_EXPIRY: (process.env.JWT_EXPIRY as jwt.SignOptions["expiresIn"]) || "1d",
+  MAIL_ID: process.env.MAIL_ID || "",
+  MAIL_PASSWORD: process.env.MAIL_PASSWORD || "",
+  REDIS_HOST: process.env.REDIS_HOST || "localhost",
+  REDIS_PORT: Number(process.env.REDIS_PORT) || 6379,
 };
 
 export const dbConfig: DbConfig = {
