@@ -1,7 +1,8 @@
-import { HydratedDocument, model, Schema } from "mongoose";
+import { HydratedDocument, model, Schema, Types } from "mongoose";
 
 export interface ChannelAttrs {
   name: string;
+  workspaceId: Types.ObjectId;
 }
 export type ChannelDoc = HydratedDocument<ChannelAttrs>;
 const channelSchema = new Schema<ChannelAttrs>(
@@ -11,6 +12,11 @@ const channelSchema = new Schema<ChannelAttrs>(
       required: [true, "Name is required"],
       minlength: [3, "Name must be at least 3 characters"],
       maxlength: [50, "Name must be less than 50 characters"],
+    },
+    workspaceId: {
+      type: Schema.Types.ObjectId,
+      ref: "Workspace",
+      required: [true, "Workspace is required"],
     },
   },
   {

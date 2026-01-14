@@ -81,7 +81,10 @@ const workspaceRepository = {
     if (existingChannel) {
       throw new ForbiddenError("Channel already exists in workspace");
     }
-    const channel = await channelRepository.create({ name: channelName });
+    const channel = await channelRepository.create({
+      name: channelName,
+      workspaceId: workspaceId,
+    });
     workspace.channels.push(channel._id);
     await workspace.save();
     return workspace;

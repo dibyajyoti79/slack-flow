@@ -199,7 +199,7 @@ const isUserAdminOfWorkspace = (
   });
 };
 
-const isUserMemberOfWorkspace = (
+export const isUserMemberOfWorkspace = (
   workspace: WorkspaceAttrs,
   userId: string
 ): boolean => {
