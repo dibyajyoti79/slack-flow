@@ -1,6 +1,6 @@
 # Slack Flow
 
-A real-time messaging backend inspired by Slack, built with Node.js, Express, Socket.io, MongoDB, BullMQ and Redis. This project demonstrates core backend concepts including WebSocket authentication, real-time communication, background job processing, and clean architecture patterns.
+A real-time messaging backend inspired by Slack, built with **Node.js**, **Express**, **Socket.io**, **MongoDB**, **BullMQ** and **Redis**. This project demonstrates core backend concepts including WebSocket authentication, real-time communication, background job processing, and clean architecture patterns.
 
 > **Note:** This is a feature implementation showcasing key backend concepts, not a full Slack clone.
 
