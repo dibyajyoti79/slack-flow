@@ -1,8 +1,15 @@
 import { Types } from "mongoose";
-import { CreateMessageDto } from "../controllers/messageSocket.controller";
 import channelRepository from "../repositories/channel.repository";
 import messageRepository from "../repositories/message.repository";
 import { isUserMemberOfWorkspace } from "./workspace.service";
+
+export type CreateMessageDto = {
+  body: string;
+  image?: string;
+  channelId: string;
+  senderId: string;
+  workspaceId: string;
+};
 
 const messageService = {
   async getMessages(

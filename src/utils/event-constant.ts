@@ -1,3 +1,11 @@
+// Channel Messages
 export const NEW_MESSAGE_EVENT = "NewMessage";
-export const JOIN_CHANNEL_EVENT = "JoinChannel";
-export const LEAVE_CHANNEL_EVENT = "LeaveChannel";
+
+// Direct Messages
+export const NEW_DIRECT_MESSAGE_EVENT = "NewDirectMessage";
+
+// Typing Indicators
+export const TYPING_EVENT = "Typing";
+
+// Unread/Notification
+export const UNREAD_UPDATE_EVENT = "UnreadUpdate";

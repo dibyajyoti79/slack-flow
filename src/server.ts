@@ -12,14 +12,35 @@ import "./workers/mail.worker";
 import { setupBullBoard } from "./utils/helpers/bull-board.helper";
 import { messageSocketHandler } from "./controllers/messageSocket.controller";
 import { channelSocketHandler } from "./controllers/channelSocket.controller";
+import { socketAuthMiddleware } from "./middlewares/socketAuth.middleware";
+import { socketService } from "./services/socket.service";
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
 
-io.on("connection", (socket) => {
+// Socket authentication middleware
+io.use(socketAuthMiddleware);
+
+io.on("connection", async (socket) => {
+  const userId = socket.user?.id;
+  logger.info(`Socket connected: ${socket.id}, User: ${userId}`);
+
+  // Auto-join user to all their channels and DM rooms
+  if (userId) {
+    await socketService.autoJoinUserRooms(socket, userId);
+  }
+
   messageSocketHandler(io, socket);
   channelSocketHandler(io, socket);
+
+  socket.on("disconnect", () => {
+    logger.info(`Socket disconnected: ${socket.id}`);
+  });
 });
 
 app.use(express.json());
